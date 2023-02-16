@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard-general-dashboard');
-
 // Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+Route::group(['prefix' => 'app'], function () {
+    Route::get('/dashboard', 'App\Http\Controllers\Content\DashboardController@index')->name('dashboard');
 });
+
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
@@ -260,6 +259,9 @@ Route::get('/credits', function () {
     return view('pages.credits', ['type_menu' => '']);
 });
 
-Auth::routes();
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm');
+    Route::post('login', 'App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

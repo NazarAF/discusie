@@ -64,7 +64,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credential['data'], $credential['remember'])) {
             $request->session()->regenerate();
-            return redirect()->intended('app/dashboard')->withErrors([
+            return redirect()->intended('channels/dashboard')->withErrors([
                 'title' => 'Successful!',
                 'message' => 'Login App',
                 'type' => 'success'

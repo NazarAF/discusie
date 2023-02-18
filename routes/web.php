@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Content\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Dashboard
-Route::group(['prefix' => 'app'], function () {
+Route::group(['prefix' => 'channels', 'middleware' => 'auth'], function () {
     Route::get('/dashboard', 'App\Http\Controllers\Content\DashboardController@index')->name('dashboard');
+
+    Route::group(['middleware' => 'role:1'], function () {
+        Route::get('/settings', 'App\Http\Controllers\Admin\SettingsController@index')->name('settings');
+        Route::get('/optimize', 'App\Http\Controllers\Admin\SettingsController@optimize')->name('optimize');
+        Route::get('/cache', 'App\Http\Controllers\Admin\SettingsController@cache')->name('cache');
+        Route::get('/route/{action}', 'App\Http\Controllers\Admin\SettingsController@routes')->name('route');
+        Route::get('/storage/{action}', 'App\Http\Controllers\Admin\SettingsController@storages')->name('storage');
+        Route::get('/maintenance/{status}', 'App\Http\Controllers\Admin\SettingsController@maintenance')->name('maintenance');
+        // Route::get('/sitemap/{action}', 'App\Http\Controllers\Admin\SettingsController@sitemap');
+    });
+
+    Route::resource('profile', ProfileController::class,[
+        'names' => [
+            'index' => 'profile',
+            'update' => 'profile.update',
+            'destroy' => 'profile.destroy'
+        ]
+    ])->only([
+        'index', 'update', 'destroy'
+    ]);
+
+    Route::get('profile/reset', 'App\Http\Controllers\Admin\ProfileController@reset')->name('profile.reset');
 });
 
 Route::get('/dashboard-ecommerce-dashboard', function () {
@@ -254,7 +277,6 @@ Route::get('/utilities-subscribe', function () {
     return view('pages.utilities-subscribe', ['type_menu' => 'utilities']);
 });
 
-// credits
 Route::get('/credits', function () {
     return view('pages.credits', ['type_menu' => '']);
 });
@@ -262,6 +284,6 @@ Route::get('/credits', function () {
 Route::group(['middleware' => ['guest']], function () {
     Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm');
     Route::post('login', 'App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
+
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

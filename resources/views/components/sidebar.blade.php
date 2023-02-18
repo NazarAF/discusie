@@ -12,6 +12,11 @@
                 <a class="nav-link"
                     href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
+            <li class="menu-header">Admin</li>
+            <li class="{{ Route::is('settings') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ route('settings') }}"><i class="fas fa-wrench"></i><span>Settings</span></a>
+            </li>
             <li class="menu-header">Starter</li>
             <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}">
                 <a href="#"

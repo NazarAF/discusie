@@ -239,32 +239,29 @@
                 </div>
             </div>
         </li>
-        <li class="dropdown"><a href="#"
-                data-toggle="dropdown"
-                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image"
-                    src="{{ asset('img/avatar/avatar-1.png') }}"
-                    class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                @if(auth()->user()->profile)
+                <img alt="image" src="{{ asset('storage/' . auth()->user()->profile) }}" class="rounded-circle mr-1" style="width: 35px; height: 35px;">
+                @else
+                <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+                @endif
+                <div class="d-sm-none d-lg-inline-block">{{ auth()->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="features-profile.html"
+                <div class="dropdown-title text-center">{{ auth()->user()->username }}</div>
+                <a href="{{ route('profile') }}"
                     class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
-                </a>
-                <a href="features-activities.html"
-                    class="dropdown-item has-icon">
-                    <i class="fas fa-bolt"></i> Activities
-                </a>
-                <a href="features-settings.html"
-                    class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
+                    <i class="far fa-user m-auto"></i><span class="pl-2">Profile</span>
                 </a>
                 <div class="dropdown-divider"></div>
+                <a href="{{ route('profile') }}"
+                    class="dropdown-item has-icon text-success">
+                    <i class="fas fa-home m-auto"></i><span class="pl-2">Home</span>
+                </a>
                 <a href="#"
                     class="dropdown-item has-icon text-danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt m-auto"></i><span class="pl-2">Logout</span>
                 </a>
             </div>
         </li>

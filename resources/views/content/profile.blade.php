@@ -34,8 +34,8 @@
                     <div class="col-12 col-md-12 col-lg-7">
                         <div class="card profile-widget">
                             <form
+                                id="edit-profile"
                                 method="POST"
-                                action="{{ route('profile.update', ['profile' => auth()->user()->id_user]) }}"
                                 enctype="multipart/form-data"
                                 class="needs-validation">
                                 @csrf
@@ -159,6 +159,21 @@
             });
         }
 
+        function notification(response) {
+            let setup = {
+                position: 'topCenter',
+                layout: '2',
+                title: response['title'],
+                message: response['message'],
+            }
+
+            if (response['type'] == 'success') {
+                iziToast.success(setup);
+            } else {
+                iziToast.error(setup);
+            }
+        }
+
         $(document).ready(function () {
             $('.change-photo').click(function (e) {
                 e.preventDefault();
@@ -188,18 +203,20 @@
                         'note': $("textarea[name='note']").val()
                     },
                     success: function (response) {
-                        let setup = {
-                            position: 'topCenter',
-                            layout: '2',
-                            title: response['title'],
-                            message: response['message'],
-                        }
+                        notification(response)
+                    }
+                });
+            });
 
-                        if (response['type'] == 'success') {
-                            iziToast.success(setup);
-                        } else {
-                            iziToast.error(setup);
-                        }
+            $('#edit-profile').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('profile.update', ['profile' => auth()->user()->id_user]) }}",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        notification(response)
                     }
                 });
             });
@@ -222,18 +239,7 @@
                                 '_token': token
                             },
                             success: function (response) {
-                                let setup = {
-                                    position: 'topCenter',
-                                    layout: '2',
-                                    title: response['title'],
-                                    message: response['message'],
-                                }
-
-                                if (response['type'] == 'success') {
-                                    iziToast.success(setup);
-                                } else {
-                                    iziToast.error(setup);
-                                }
+                                notification(response)
                             }
                         })
                         $('#confirmation').modal('hide')

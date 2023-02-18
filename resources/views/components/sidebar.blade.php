@@ -12,6 +12,10 @@
                 <a class="nav-link"
                     href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
+            <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ route('dashboard') }}"><i class="fas fa-compass"></i><span>Discover</span></a>
+            </li>
             <li class="menu-header">Admin</li>
             <li class="{{ Route::is('settings') ? 'active' : '' }}">
                 <a class="nav-link"

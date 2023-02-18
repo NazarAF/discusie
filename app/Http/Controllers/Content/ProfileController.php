@@ -62,11 +62,11 @@ class ProfileController extends Controller
         }
 
         if ($validation->fails())
-            return back()->withErrors([
+            return response([
                 'title' => 'Failed!',
+                'type' => 'error',
                 'message' => $msg,
-                'type' => 'error'
-            ]);
+            ], 200);
 
         if ($request->section == 'profile') {
             $photo = $profile->profile ?? null;
@@ -89,23 +89,17 @@ class ProfileController extends Controller
             $profile->update([
                 'note' => $request->note,
             ]);
-
-            return response([
-                'title' => 'Success!',
-                'type' => 'success',
-                'message' => $msg,
-            ], 200);
         } else {
             $profile->update([
                 'password' => bcrypt($request->password),
             ]);
         }
 
-        return back()->withErrors([
+        return response([
             'title' => 'Success!',
+            'type' => 'success',
             'message' => $msg,
-            'type' => 'success'
-        ]);
+        ], 200);
     }
 
     /**

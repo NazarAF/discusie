@@ -60,4 +60,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the post associated with the user.
+     */
+    public function post() {
+        return $this->hasMany(Notification::class, 'id_user');
+    }
+
+    public function member() {
+        return $this->hasMany(Member::class, 'id_user');
+    }
 }

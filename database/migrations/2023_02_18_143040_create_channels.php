@@ -20,7 +20,8 @@ return new class extends Migration
             $table->integer('id_category')->unsigned()->nullable();
             $table->foreign('id_category')->references('id_category')->on('categories')->onDelete('set null');
             $table->string('profile');
-            $table->string('name');
+            $table->string('name', 25);
+            $table->string('description');
             $table->string('invite')->unique();
             $table->boolean('permission')->default(false);
             $table->timestamps();

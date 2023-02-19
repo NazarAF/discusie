@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->integer('id_channel')->unsigned();
             $table->foreign('id_channel')->references('id_channel')->on('channels')->onDelete('cascade');
+            $table->tinyInteger('role')->default(0);
+            $table->boolean('status')->default(false);
         });
     }
 

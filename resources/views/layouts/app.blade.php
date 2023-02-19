@@ -108,7 +108,9 @@
     </script>
     <!-- Scripts For Startup -->
 
+    <!-- Spesific Page JS -->
     @stack('scripts')
+    <!-- Spesific Page JS -->
 
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>

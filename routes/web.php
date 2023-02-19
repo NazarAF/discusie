@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Content\ProfileController;
+use App\Http\Controllers\Content\DiscoverController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,21 @@ use App\Http\Controllers\Content\ProfileController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Authentication
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'App\Http\Controllers\Auth\LoginController@authenticate')->name('auth.login');
+
+    Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register')->name('auth.register');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
+});
+
+Auth::routes(['register' => false, 'login' => false, 'verify' => true]);
 
 // Dashboard
 Route::group(['prefix' => 'channels', 'middleware' => 'auth'], function () {
@@ -38,7 +54,15 @@ Route::group(['prefix' => 'channels', 'middleware' => 'auth'], function () {
         'index', 'update', 'destroy'
     ]);
 
-    Route::get('profile/reset', 'App\Http\Controllers\Admin\ProfileController@reset')->name('profile.reset');
+    Route::resource('discover', DiscoverController::class,[
+        'names' => [
+            'index' => 'discover',
+        ]
+    ])->only([
+        'index'
+    ]);
+
+    // Route::get('profile/reset', 'App\Http\Controllers\Content\ProfileController@reset')->name('profile.reset');
 });
 
 Route::get('/dashboard-ecommerce-dashboard', function () {
@@ -280,10 +304,3 @@ Route::get('/utilities-subscribe', function () {
 Route::get('/credits', function () {
     return view('pages.credits', ['type_menu' => '']);
 });
-
-Route::group(['middleware' => ['guest']], function () {
-    Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm');
-    Route::post('login', 'App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
-
-});
-

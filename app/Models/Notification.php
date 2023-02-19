@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Maintenance extends Model
+class Notification extends Model
 {
     use HasFactory;
 
@@ -37,7 +37,7 @@ class Maintenance extends Model
     ];
 
     /**
-     * Get the user associated with the post.
+     * Get the user associated with the notification.
      */
     public function user() {
         return $this->belongsTo(User::class, 'id_user');

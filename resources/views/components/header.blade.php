@@ -147,7 +147,7 @@
                     class="dropdown-item has-icon text-success">
                     <i class="fas fa-home m-auto"></i><span class="pl-2">Home</span>
                 </a>
-                <a href="#"
+                <a href="{{ route('auth.logout') }}"
                     class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt m-auto"></i><span class="pl-2">Logout</span>
                 </a>

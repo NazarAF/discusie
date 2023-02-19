@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes(['register' => false, 'login' => false, 'verify' => true]);
 
 // Dashboard
-Route::group(['prefix' => 'channels', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'channels', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', 'App\Http\Controllers\Content\DashboardController@index')->name('dashboard');
 
     Route::group(['middleware' => 'role:1'], function () {

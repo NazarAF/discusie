@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Notification;
 
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -54,10 +55,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'nickname' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
+            'nickname' => ['required', 'string', 'max:50'],
+            'username' => ['required', 'string', 'max:25'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:5'],
             'agree' => ['required']
         ]);
     }
@@ -70,11 +71,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'nickname' => $data['nickname'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        Notification::create([
+            'id_user' => $user->id_user,
+            'title' => "Welcome to Discusie",
+            'body' => "Your registration was successful",
+        ]);
+
+        return $user;
     }
 }

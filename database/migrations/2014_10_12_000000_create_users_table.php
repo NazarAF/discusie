@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->string('bio')->nullable();
             $table->string('note')->nullable();
-            $table->string('nickname');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('nickname', 50);
+            $table->string('username', 25)->unique();
+            $table->string('email', 50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->tinyInteger('role')->default(0);

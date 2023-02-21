@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\CategoriesController;
+
 use App\Http\Controllers\Content\ProfileController;
 use App\Http\Controllers\Content\DiscoverController;
 
@@ -42,6 +45,18 @@ Route::group(['prefix' => 'channels', 'middleware' => ['auth', 'verified']], fun
         Route::get('/storage/{action}', 'App\Http\Controllers\Admin\SettingsController@storages')->name('storage');
         Route::get('/maintenance/{status}', 'App\Http\Controllers\Admin\SettingsController@maintenance')->name('maintenance');
         // Route::get('/sitemap/{action}', 'App\Http\Controllers\Admin\SettingsController@sitemap');
+
+        Route::resource('categories', CategoriesController::class,[
+            'names' => [
+                'index' => 'categories',
+                'store' => 'categories.store',
+                'edit' => 'categories.edit',
+                'update' => 'categories.update',
+                'destroy' => 'categories.destroy'
+            ]
+        ])->only([
+            'index', 'store', 'edit', 'update', 'destroy'
+        ]);
     });
 
     Route::resource('profile', ProfileController::class,[

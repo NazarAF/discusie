@@ -85,6 +85,12 @@ class ProfileController extends Controller
                 'phone' => $request->phone,
                 'username' => $request->username,
             ]);
+
+            return back()->withErrors([
+                'title' => 'Success!',
+                'type' => 'success',
+                'message' => $msg,
+            ]);
         } else if ($request->section == 'notebook') {
             $profile->update([
                 'note' => $request->note,

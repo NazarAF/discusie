@@ -22,7 +22,13 @@
                 @csrf
                 <div class="form-group">
                     <label for="username">Username or Email</label>
-                    <input id="username"
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-mail-bulk"></i>
+                            </div>
+                        </div>
+                        <input id="username"
                         type="text"
                         class="form-control"
                         name="username"
@@ -30,6 +36,7 @@
                         placeholder="Email address or username"
                         required
                         autofocus>
+                    </div>
                     <div class="invalid-feedback">
                         Please fill in your username
                     </div>
@@ -40,28 +47,31 @@
                         <label for="password"
                             class="control-label">Password</label>
                     </div>
-                    <input id="password"
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div id="shpsw" class="input-group-text">
+                                <i class="fas fa-eye-slash"></i>
+                            </div>
+                        </div>
+                        <input id="password"
                         type="password"
                         class="form-control"
                         name="password"
                         tabindex="2"
                         placeholder="Password"
                         required>
+                    </div>
                     <div class="invalid-feedback">
                         Please fill in your password
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox"
-                            name="remember"
-                            class="custom-control-input"
-                            tabindex="3"
-                            id="remember-me">
-                        <label class="custom-control-label"
-                            for="remember-me">Remember Me</label>
-                    </div>
+                    <label class="custom-switch pl-0">
+                        <input type="checkbox" name="remember" class="custom-switch-input" hidden>
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">Remember me</span>
+                    </label>
                 </div>
 
                 <div class="form-group text-right">
@@ -85,7 +95,17 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
-
-    <!-- Page Specific JS File -->
+   <script>
+        $(document).ready(function () {
+            $('#shpsw').click(function (e) {
+                e.preventDefault();
+                $(this).find('.fas').toggleClass('fa-eye-slash fa-eye');
+                if ($('#password').attr('type') == 'password') {
+                    $('#password').attr('type', 'text');
+                } else {
+                    $('#password').attr('type', 'password');
+                }
+            });
+        });
+   </script>
 @endpush

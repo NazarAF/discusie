@@ -21,6 +21,10 @@
                 <a class="nav-link"
                     href="{{ route('settings') }}"><i class="fas fa-wrench"></i><span>Settings</span></a>
             </li>
+            <li class="{{ Route::is('categories') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ route('categories') }}"><i class="fas far fa-swatchbook"></i><span>Categories</span></a>
+            </li>
             <li class="menu-header">Starter</li>
             <li class="nav-item dropdown {{ $type_menu === 'layout' ? 'active' : '' }}">
                 <a href="#"

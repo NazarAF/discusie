@@ -34,7 +34,7 @@
                     <div class="col-12 col-md-12 col-lg-7">
                         <div class="card profile-widget">
                             <form
-                                id="edit-profile"
+                                action="{{ route('profile.update', ['profile' => auth()->user()->id_user]) }}"
                                 method="POST"
                                 enctype="multipart/form-data"
                                 class="needs-validation">
@@ -114,7 +114,7 @@
                                     <button type="button" class="btn btn-danger btn-delete my-2" value="{{auth()->user()->id_user}}">
                                         Delete Account
                                     </button>
-                                    <a href="{{route('profile.reset')}}" type="button" class="btn btn-warning mx-2">Reset Password</a>
+                                    {{-- <a href="{{route('profile.reset')}}" type="button" class="btn btn-warning mx-2">Reset Password</a> --}}
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </form>
@@ -186,40 +186,6 @@
              */
             $("#profile").on("change", handleFileSelect)
             display = $(".photo-profile")
-
-            /**
-             * Set Notebook
-             * @return void
-             */
-            $('#notebook').submit(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('profile.update', ['profile' => auth()->user()->id_user]) }}",
-                    data: {
-                        '_method': 'PUT',
-                        '_token': token,
-                        'section': 'notebook',
-                        'note': $("textarea[name='note']").val()
-                    },
-                    success: function (response) {
-                        notification(response)
-                    }
-                });
-            });
-
-            $('#edit-profile').submit(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('profile.update', ['profile' => auth()->user()->id_user]) }}",
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function (response) {
-                        notification(response)
-                    }
-                });
-            });
 
             /**
              * Delete User

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments("id_category");
             $table->string('category')->unique();
+            $table->string('icon')->unique();
         });
     }
 

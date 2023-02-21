@@ -43,6 +43,20 @@
         gtag('config', 'UA-94034622-3');
     </script>
     <!-- END GA -->
+
+    <!-- Startup Library -->
+    <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Startup Library -->
+
+    <!-- Scripts For Startup -->
+    <script>
+        var token;
+
+        $(document).ready(function () {
+            token = $('meta[name="csrf-token"]').attr('content')
+        });
+    </script>
+    <!-- Scripts For Startup -->
 </head>
 
 <body>
@@ -60,10 +74,12 @@
             <!-- Footer -->
             @include('components.footer')
         </div>
-        <div class="modal fade"
+        <div
+            class="modal fade"
             tabindex="-1"
             role="dialog"
-            id="confirmation">
+            id="confirmation"
+        >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -87,7 +103,6 @@
     </div>
 
     <!-- General JS Scripts -->
-    <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('library/popper.js/dist/umd/popper.js') }}"></script>
     <script src="{{ asset('library/tooltip.js/dist/umd/tooltip.js') }}"></script>
     <script src="{{ asset('library/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -97,16 +112,6 @@
     <script src="{{ asset('library/prismjs/prism.js') }}"></script>
     <script src="{{ asset('js/stisla.js') }}"></script>
     <!-- General JS Scripts -->
-
-    <!-- Scripts For Startup -->
-    <script>
-        var token;
-
-        $(document).ready(function () {
-            token = $('meta[name="csrf-token"]').attr('content')
-        });
-    </script>
-    <!-- Scripts For Startup -->
 
     <!-- Spesific Page JS -->
     @stack('scripts')
